@@ -1,0 +1,27 @@
+schema {
+    query: QueryRoot
+}
+
+type QueryRoot {
+    allAnimals(first: Int): [Animal!]!
+    animal(name: String!): Animal
+}
+
+interface Animal {
+    name: String!
+}
+
+interface Predator {
+    eats: [Animal!]!
+}
+
+type Tiger implements Animal, Predator {
+    name: String!
+    numberOfStripes: Int!
+    eats: [Animal!]!
+}
+
+type Antelope implements Animal {
+    name: String!
+    numberOfHorns: Int!
+}

@@ -10,4 +10,8 @@
                  [alumbra/ring "0.1.0-SNAPSHOT"]
                  [alumbra/validator "0.1.0-SNAPSHOT"]
                  [alumbra/parser "0.1.0-SNAPSHOT"]]
+  :profiles {:example
+             {:dependencies [[aleph "0.4.2-alpha8"]]
+              :source-paths ["example"]}}
+  :aliases {"example-repl" ["with-profile" "+example" "repl"]}
   :pedantic? :abort)
