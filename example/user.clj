@@ -79,7 +79,8 @@
       (case uri
         "/"        (graphiql request)
         "/graphql" (graphql request)
-        {:status 204}))))
+        {:status 404
+         :headers {"cache-control" "public, max-age=600"}}))))
 
 ;; ## Server
 
