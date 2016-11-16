@@ -3,11 +3,32 @@
 __alumbra__ is a set of reusable GraphQL components for Clojure conforming to
 the data structures given in [alumbra.spec][alumbra-spec].
 
-[alumbra-spec]: https://github.com/alumbra/alumbra.spec
-
 ## Usage
 
 Coming soon.
+
+## Components
+
+You can include any of alumbra's components individually using the following
+libraries:
+
+           | Build Status | Artifact |
+:----------|:------------:|:---------:|
+[Specification (clojure.spec)][alumbra-spec]  | [![Build Status](https://travis-ci.org/alumbra/alumbra.spec.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.spec) | [![Clojars Project](https://img.shields.io/clojars/v/alumbra/spec.svg)](https://clojars.org/alumbra/spec)
+[Generators (test.check)][alumbra-generators] | [![Build Status](https://travis-ci.org/alumbra/alumbra.generators.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.generators) | [![Clojars Project](https://img.shields.io/clojars/v/alumbra/generators.svg)](https://clojars.org/alumbra/generators)
+[Parser][alumbra-parser]                      | [![Build Status](https://travis-ci.org/alumbra/alumbra.parser.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.parser) | [![Clojars Project](https://img.shields.io/clojars/v/alumbra/parser.svg)](https://clojars.org/alumbra/parser)
+[Analyzer][alumbra-analyzer]                  | [![Build Status](https://travis-ci.org/alumbra/alumbra.analyzer.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.analyzer) | [![Clojars Project](https://img.shields.io/clojars/v/alumbra/analyzer.svg)](https://clojars.org/alumbra/analyzer)
+|[Validator][alumbra-validator]               | [![Build Status](https://travis-ci.org/alumbra/alumbra.validator.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.validator) | [![Clojars Project](https://img.shields.io/clojars/v/alumbra/validator.svg)](https://clojars.org/alumbra/validator)
+|[Ring Middleware][alumbra-ring]              | [![Build Status](https://travis-ci.org/alumbra/alumbra.ring.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.ring) | [![Clojars Project](https://img.shields.io/clojars/v/alumbra/ring.svg)](https://clojars.org/alumbra/ring)
+|[Claro Executor][alumbra-claro]              | [![Build Status](https://travis-ci.org/alumbra/alumbra.claro.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.claro) | [![Clojars Project](https://img.shields.io/clojars/v/alumbra/claro.svg)](https://clojars.org/alumbra/claro)
+
+[alumbra-spec]: https://github.com/alumbra/alumbra.spec
+[alumbra-generators]: https://github.com/alumbra/alumbra.generators
+[alumbra-parser]: https://github.com/alumbra/alumbra.parser
+[alumbra-analyzer]: https://github.com/alumbra/alumbra.analyzer
+[alumbra-validator]: https://github.com/alumbra/alumbra.validator
+[alumbra-ring]: https://github.com/alumbra/alumbra.ring
+[alumbra-claro]: https://github.com/alumbra/alumbra.claro
 
 ## License
 
