@@ -1,7 +1,9 @@
 # alumbra
 
 __alumbra__ is a set of reusable GraphQL components for Clojure conforming to
-the data structures given in [alumbra.spec][alumbra-spec].
+the data structures given in [alumbra.spec][alumbra-spec]. It also uses these
+components to provide an easy-to-use GraphQL infrastructure, allowing you to
+get started with minimal effort.
 
 ## Usage
 
