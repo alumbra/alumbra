@@ -15,7 +15,7 @@
   (resolve! [_ _]
     {:type :tiger
      :name name
-     :numberOfStripes (* 7 (count name))
+     :number-of-stripes (* 7 (count name))
      :eats [(->Animal "Annie")
             (->Animal "Alex")
             (->Animal "Alan")
@@ -26,7 +26,7 @@
   (resolve! [_ _]
     {:type :antelope
      :name name
-     :numberOfHorns (mod (count name) 3)}))
+     :number-of-horns (mod (count name) 3)}))
 
 (defrecord Animal [name]
   data/Resolvable
@@ -50,30 +50,15 @@
 ;; ## Query Root
 
 (def QueryRoot
-  {:allAnimals (->Animals nil)
-   :animal     (->Animal nil)})
-
-;; ## Conditionals/Fragments
-;;
-;; I think this needs to be changed. Ideally, we would have a function that
-;; returns the type of each value and then check in the projection whether
-;; that means we should apply the projection.
-;;
-;; Might need to add a bit more type information to the canonical operation,
-;; i.e. instead of a single type condition for fragments, supply all possible
-;; types (implementations of unions/interfaces, for example).
-
-(def conditional-fns
-  {"Tiger"    #(projection/conditional (projection/extract :type) #{:tiger} %)
-   "Antelope" #(projection/conditional (projection/extract :type) #{:antelope} %)})
+  {:all-animals (->Animals nil)
+   :animal      (->Animal nil)})
 
 ;; ## Handler (w/ constant routing)
 
 (def app
   (let [graphql  (alumbra/handler
                    {:schema (io/resource "Savannah.graphql")
-                    :query  QueryRoot
-                    :conditional-fns conditional-fns})
+                    :query  QueryRoot})
         graphiql (alumbra/graphiql-handler "/graphql")]
     (fn [{:keys [uri] :as request}]
       (case uri
