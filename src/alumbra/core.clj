@@ -4,28 +4,22 @@
              [graphiql :as graphiql]]
             [alumbra
              [analyzer :as analyzer]
-             [canonical :as canonicalizer]
              [claro :as claro]
              [parser :as parser]
              [validator :as validator]]))
 
-(defn analyze
+(defn- analyze
   "Analyze the given value, producing a result conforming to
-   `:alumbra/analyzed-schema`."
+   `:alumbra/analyzed-schema`, including all introspection fields and
+   base entities."
   [schema]
-  (analyzer/analyze-schema schema))
-
-(defn validator
-  "Generate a validator function using the given schema (will be analyzed if
-   not already)."
-  [schema]
-  (-> schema
-      (analyze)
-      (validator/validator)))
+  (analyzer/analyze-schema
+    parser/parse-schema
+    schema))
 
 (defn string-validator
   "Generate a validator function that takes GraphQL query document strings
-   as input. The given schema will be analyzed if it isn't already.
+   as input.
 
    ```clojure
    (def validate
@@ -37,7 +31,8 @@
 
    On successful validation, the validator returns `nil`."
   [schema]
-  (comp (validator schema)
+  (comp (validator/validator
+          (analyze schema))
         parser/parse-document))
 
 (defn handler
@@ -50,7 +45,7 @@
         opts   (assoc opts :schema schema)]
     (->> {:parser        #(parser/parse-document %)
           :validator     (validator/validator schema)
-          :canonicalizer #(canonicalizer/canonicalize schema %1 %2 %3)
+          :canonicalizer #(analyzer/canonicalize-operation schema %1 %2 %3)
           :executor      (claro/make-executor opts)}
          (merge opts)
          (graphql/handler))))
