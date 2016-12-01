@@ -14,8 +14,8 @@
    base entities."
   [schema]
   (analyzer/analyze-schema
-    parser/parse-schema
-    schema))
+    schema
+    parser/parse-schema))
 
 (defn string-validator
   "Generate a validator function that takes GraphQL query document strings
