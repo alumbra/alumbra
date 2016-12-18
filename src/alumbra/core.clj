@@ -8,6 +8,8 @@
              [parser :as parser]
              [validator :as validator]]))
 
+;; ## Helper
+
 (defn- analyze
   "Analyze the given value, producing a result conforming to
    `:alumbra/analyzed-schema`, including all introspection fields and
@@ -16,6 +18,8 @@
   (analyzer/analyze-schema
     schema
     parser/parse-schema))
+
+;; ## String Validator
 
 (defn string-validator
   "Generate a validator function that takes GraphQL query document strings
@@ -35,6 +39,8 @@
           (analyze schema))
         parser/parse-document))
 
+;; ## Ring
+
 (defn handler
   "Generate a Ring handler for GraphQL execution based on the given GraphQL
    schema.
@@ -45,8 +51,8 @@
         opts   (assoc opts :schema schema)]
     (->> {:parser        #(parser/parse-document %)
           :validator     (validator/validator schema)
-          :canonicalizer #(analyzer/canonicalize-operation schema %1 %2 %3)
-          :executor      (claro/make-executor opts)}
+          :canonicalizer (analyzer/canonicalizer schema)
+          :executor      (claro/executor opts)}
          (merge opts)
          (graphql/handler))))
 
