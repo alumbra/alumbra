@@ -8,7 +8,7 @@
   :dependencies [[org.clojure/clojure "1.9.0-alpha14" :scope "provided"]
                  [alumbra/claro "0.1.0"]
                  [alumbra/ring "0.1.0-SNAPSHOT"]
-                 [alumbra/analyzer "0.1.5"]
+                 [alumbra/analyzer "0.1.6"]
                  [alumbra/validator "0.1.0-SNAPSHOT"]
                  [alumbra/parser "0.1.4"]]
   :profiles {:example
