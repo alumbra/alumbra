@@ -11,6 +11,7 @@
 (declare ->Animal)
 
 (defrecord Tiger [name]
+  data/PureResolvable
   data/Resolvable
   (resolve! [_ _]
     {:type :tiger
@@ -22,6 +23,7 @@
             (->Animal "Alice")]}))
 
 (defrecord Antelope [name]
+  data/PureResolvable
   data/Resolvable
   (resolve! [_ _]
     {:type :antelope
@@ -29,6 +31,7 @@
      :number-of-horns (mod (count name) 3)}))
 
 (defrecord Animal [name]
+  data/PureResolvable
   data/Resolvable
   (resolve! [_ _]
     (cond (.startsWith name "A") (->Antelope name)
@@ -36,6 +39,7 @@
           :else nil)))
 
 (defrecord Animals [first]
+  data/PureResolvable
   data/Resolvable
   (resolve! [_ _]
     (->> ["Alex"
