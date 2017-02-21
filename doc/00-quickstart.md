@@ -57,3 +57,5 @@ curl -XPOST "http://0:3000" -H'Content-Type: application/json' -d'{
 ```json
 {"data":{"me":{"name":"Person #0","friends":[{"name":"Person #1"},{"name":"Person #2"}]}}}
 ```
+
+[claro]: https://github.com/xsc/claro
