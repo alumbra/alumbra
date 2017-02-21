@@ -20,10 +20,60 @@ you to get started with minimal effort.
 [claro]: https://github.com/xsc/claro
 [ring]: https://github.com/ring-clojure/ring
 
+## Quickstart
+
+```clojure
+(require '[alumbra.core :as alumbra]
+         '[claro.data :as data])
+```
+
+First, we declare our GraphQL schema and implement a `Resolvable` for each
+non-root type:
+
+```clojure
+(def schema
+  "type Person { name: String!, friends: [Person!]! }
+   type QueryRoot { me: Person! }
+   schema { query: QueryRoot }")
+
+(defrecord Person [id]
+  data/Resolvable
+  (resolve! [_ _]
+    {:name    (str "Person #" id)
+     :friends (map ->Person  (range (inc id) (+ id 3)))}))
+```
+
+Then we declare our `QueryRoot` and instantiate the handler:
+
+```clojure
+(def QueryRoot
+  {:me (map->Person {:id 0})})
+
+(def app
+  (alumbra/handler
+    {:schema schema
+     :query  QueryRoot}))
+```
+
+And this we pass to a Ring-compatible HTTP server of our choice:
+
+```clojure
+(defonce my-graphql-server
+  (aleph.http/start-server #'app {:port 3000}))
+```
+
+Check out our GraphQL endpoint!
+
+```shell
+$ curl -XPOST "http://0:3000" -H'Content-Type: application/json' -d'{
+  "query": "{ me { name, friends { name } } }"
+}'
+{"data":{"me":{"name":"Person #0","friends":[{"name":"Person #1"},{"name":"Person #2"}]}}}
+```
+
 ## Documentation
 
-1. __[Quickstart Guide](doc/00-quickstart.md)__
-2. [Component Overview](doc/99-alumbra-components.md)
+1. [Component Overview](doc/99-alumbra-components.md)
 
 ## Contributing
 
