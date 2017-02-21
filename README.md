@@ -1,170 +1,29 @@
 # alumbra
 
-__alumbra__ is a set of reusable GraphQL components for Clojure conforming to
-the data structures given in [alumbra.spec][alumbra-spec]. It also uses these
-components to provide an easy-to-use GraphQL infrastructure, allowing you to
-get started with minimal effort.
-
-## Quickstart
-
-We start with a GraphQL schema:
-
-```clojure
-(def schema
-  "type Person { name: String!, friends: [Person!]! }
-   type QueryRoot { me: Person! }
-   schema { query: QueryRoot }")
-```
-
-We define one [claro][claro] resolvable per non-root type:
-
-```clojure
-(require '[claro.data :as data])
-
-(defrecord Person [id]
-  data/Resolvable
-  (resolve! [_ _]
-    {:name    (str "Person #" id)
-     :friends (map ->Person  (range (inc id) (+ id 3)))}))
-```
-
-We declare a map for each root type:
-
-```clojure
-(def QueryRoot
-  {:me (map->Person {:id 0})})
-```
-
-We create the GraphQL handler ...
-
-```clojure
-(require '[alumbra.core :as alumbra])
-
-(def app
-  (alumbra/handler
-    {:schema schema
-     :query  QueryRoot}))
-```
-
-... and pass it to an HTTP server of our choice:
-
-```clojure
-(defonce my-graphql-server
-  (aleph.http/start-server #'app {:port 3000}))
-```
-
-And the GraphQL-fueled rocket takes off!
-
-```shell
-curl -XPOST "http://0:3000" -H'Content-Type: application/json' -d'{
-  "query": "{ me { name, friends { name } } }"
-}'
-```
-
-```json
-{"data":{"me":{"name":"Person #0","friends":[{"name":"Person #1"},{"name":"Person #2"}]}}}
-```
-
-## Components
-
-__alumbra__ is built upon a series of components that can be used and replaced
-individually.
-
-### Specification (clojure.spec)
-
-[![Build Status](https://travis-ci.org/alumbra/alumbra.spec.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.spec)
-[![Clojars Project](https://img.shields.io/clojars/v/alumbra/spec.svg)](https://clojars.org/alumbra/spec)
-
-This set of clojure.spec specifications describes the data structures and
-interfaces used by the different parts of the alumbra infrastructure. They are
-both documentation and means of verification, e.g. in tests.
-
-__[Go to Repository][alumbra-spec]__
-
-[clojure-spec]: http://clojure.org/guides/spec
-
-### Generators (test.check)
-
-[![Build Status](https://travis-ci.org/alumbra/alumbra.generators.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.generators)
-[![Clojars Project](https://img.shields.io/clojars/v/alumbra/generators.svg)](https://clojars.org/alumbra/generators)
-
-Mainly used for parser verification, these test.check generators produce
-syntactically correct GraphQL queries based on the GraphQL working draft.
-
-__[Go to Repository][alumbra-generators]__
-
-[test-check]: https://github.com/clojure/test.check
-
-### Parser
-
-[![Build Status](https://travis-ci.org/alumbra/alumbra.parser.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.parser)
-[![Clojars Project](https://img.shields.io/clojars/v/alumbra/parser.svg)](https://clojars.org/alumbra/parser)
-
-This component is built upon [ANTLR4][antlr], providing a fast parser for both
-GraphQL query documents and schemas.
-
-__[Go to Repository][alumbra-parser]__
-
-[antlr]: http://www.antlr.org/
-
-### Analyzer
-
-[![Build Status](https://travis-ci.org/alumbra/alumbra.analyzer.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.analyzer)
-[![Clojars Project](https://img.shields.io/clojars/v/alumbra/analyzer.svg)](https://clojars.org/alumbra/analyzer)
-
-The analyzer converts raw GraphQL ASTs to formats suitable for validation and
-execution. Most importantly, it can combine a GraphQL schema and a GraphQL query
-document to produce a canonical, standalone format that an executor can handle
-without further knowledge of the original type system.
-
-__[Go to Repository][alumbra-analyzer]__
-
-### Validator
-
-[![Build Status](https://travis-ci.org/alumbra/alumbra.validator.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.validator)
-[![Clojars Project](https://img.shields.io/clojars/v/alumbra/validator.svg)](https://clojars.org/alumbra/validator)
-
-This component is based on [invariant][invariant] to provide validation for
-GraphQL query documents according to the GraphQL Working Draft.
-
-[invariant]: https://github.com/xsc/invariant
-
-__[Go to Repository][alumbra-validator]__
-
-### Executor
-
-[![Build Status](https://travis-ci.org/alumbra/alumbra.claro.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.claro)
-[![Clojars Project](https://img.shields.io/clojars/v/alumbra/claro.svg)](https://clojars.org/alumbra/claro)
-
-Represent your data as [claro][claro] resolvables and mutations to have them
-easily accessible via GraphQL. Additionally, you'll benefit from the flexibility
-and optimizations claro provides out-of-the-box, including batching capabilities
-and engine extensibility.
-
-__[Go to Repository][alumbra-claro]__
-
-[claro]: https://github.com/xsc/claro
-
-### Ring Handlers
-
-[![Build Status](https://travis-ci.org/alumbra/alumbra.ring.svg?branch=master)](https://travis-ci.org/alumbra/alumbra.ring)
-[![Clojars Project](https://img.shields.io/clojars/v/alumbra/ring.svg)](https://clojars.org/alumbra/ring)
-
-This library provides [Ring][ring] handlers for both executing GraphQL queries
-and exposing an interactive [GraphiQL][graphiql] environment.
-
-__[Go to Repository][alumbra-ring]__
-
-[ring]: https://github.com/ring-clojure/ring
-[graphiql]: https://github.com/graphql/graphiql
+__alumbra__ is a set of reusable [GraphQL][graphql] components for Clojure
+conforming to the data structures given in [alumbra.spec][alumbra-spec]. It also
+uses these components to provide an easy-to-use GraphQL infrastructure, allowing
+you to get started with minimal effort.
 
 [alumbra-spec]: https://github.com/alumbra/alumbra.spec
-[alumbra-generators]: https://github.com/alumbra/alumbra.generators
-[alumbra-parser]: https://github.com/alumbra/alumbra.parser
-[alumbra-analyzer]: https://github.com/alumbra/alumbra.analyzer
-[alumbra-validator]: https://github.com/alumbra/alumbra.validator
-[alumbra-ring]: https://github.com/alumbra/alumbra.ring
-[alumbra-claro]: https://github.com/alumbra/alumbra.claro
+[graphql]: http://graphql.org
+
+## Features
+
+- built upon __[claro][claro] resolvables__, allowing you to leverage a powerful
+  and customizable data access layer,
+- idiomatic Clojure __value and name coercion__ (e.g., for record fields and
+  enum values),
+- a __fast parser and query validator__,
+- and seamless integration with __[ring][ring]-compatible__ servers.
+
+[claro]: https://github.com/xsc/claro
+[ring]: https://github.com/ring-clojure/ring
+
+## Documentation
+
+1. __[Quickstart Guide](doc/00-quickstart.md)__
+2. [Component Overview](doc/99-alumbra-components.md)
 
 ## Contributing
 
