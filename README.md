@@ -56,11 +56,9 @@ We create the GraphQL handler ...
 And the GraphQL-fueled rocket takes off!
 
 ```shell
-curl -XPOST "http://0:3000" -H'Content-Type: application/json' -d'
-  {
-    "query": "{ me { name, friends { name } } }"
-  }
-'
+curl -XPOST "http://0:3000" -H'Content-Type: application/json' -d'{
+  "query": "{ me { name, friends { name } } }"
+}'
 ```
 
 ```json
