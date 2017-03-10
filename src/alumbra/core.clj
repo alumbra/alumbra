@@ -15,6 +15,7 @@
    `:alumbra/analyzed-schema`, including all introspection fields and
    base entities."
   [schema]
+  {:post [(not (contains? % :alumbra/parser-errors))]}
   (analyzer/analyze-schema
     schema
     parser/parse-schema))
