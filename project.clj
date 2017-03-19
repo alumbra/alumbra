@@ -8,11 +8,10 @@
   :dependencies [[org.clojure/clojure "1.9.0-alpha14" :scope "provided"]
                  [alumbra/claro "0.1.4"]
                  [alumbra/ring "0.1.0"]
-                 [alumbra/analyzer "0.1.8"]
-                 [alumbra/validator "0.1.0"]
-                 [alumbra/parser "0.1.5"]]
-  :profiles {:example
-             {:dependencies [[aleph "0.4.2-alpha10"]]
-              :source-paths ["example"]}}
-  :aliases {"example-repl" ["with-profile" "+example" "repl"]}
+                 [alumbra/analyzer "0.1.9"]
+                 [alumbra/validator "0.1.1"]
+                 [alumbra/parser "0.1.6"]]
+  :profiles {:dev {:dependencies [[aleph "0.4.3"]
+                                  [riddley "0.1.14"]
+                                  [clj-http "3.4.1"]]}}
   :pedantic? :abort)
