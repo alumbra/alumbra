@@ -5,6 +5,9 @@ conforming to the data structures given in [alumbra.spec][alumbra-spec]. It also
 uses these components to provide an easy-to-use GraphQL infrastructure, allowing
 you to get started with minimal effort.
 
+[![Build Status](https://travis-ci.org/alumbra/alumbra.svg?branch=master)](https://travis-ci.org/alumbra/alumbra)
+[![Clojars Project](https://img.shields.io/clojars/v/alumbra/alumbra.svg)](https://clojars.org/alumbra/alumbra)
+
 [alumbra-spec]: https://github.com/alumbra/alumbra.spec
 [graphql]: http://graphql.org
 
