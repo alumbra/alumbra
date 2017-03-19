@@ -1,0 +1,5 @@
+language: clojure
+sudo: required
+lein: lein2
+jdk:
+  - oraclejdk8
