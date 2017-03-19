@@ -18,10 +18,12 @@ you to get started with minimal effort.
 - idiomatic Clojure __value and name coercion__ (e.g., for record fields and
   enum values),
 - a __fast parser and query validator__,
-- and seamless integration with __[ring][ring]-compatible__ servers.
+- compatibile with __[GraphiQL]][graphiql]__,
+- and seamless integration with __[ring][ring]-compatible__ servers,
 
 [claro]: https://github.com/xsc/claro
 [ring]: https://github.com/ring-clojure/ring
+[graphiql]: https://github.com/graphql/graphiql
 
 ## Quickstart
 
