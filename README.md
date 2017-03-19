@@ -38,7 +38,7 @@ non-root type:
 ```clojure
 (def schema
   "type Person { name: String!, friends: [Person!]! }
-   type QueryRoot { me: Person! }
+   type QueryRoot { person(id: ID!): Person, me: Person! }
    schema { query: QueryRoot }")
 
 (defrecord Person [id]
@@ -52,7 +52,8 @@ Then we declare our `QueryRoot` and instantiate the handler:
 
 ```clojure
 (def QueryRoot
-  {:me (map->Person {:id 0})})
+  {:person (map->Person {})
+   :me     (map->Person {:id 0})})
 
 (def app
   (alumbra/handler
