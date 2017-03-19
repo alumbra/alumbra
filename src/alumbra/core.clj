@@ -44,9 +44,84 @@
 
 (defn handler
   "Generate a Ring handler for GraphQL execution based on the given GraphQL
-   schema.
+   `:schema`.
 
-   See `alumbra.claro/make-executor` for available/required options."
+   ```graphql
+   type Person {
+     id: ID!,
+     name: String!
+   }
+
+   type QueryRoot {
+     person(id: ID!): Person
+     me: Person
+   }
+
+   schema {
+     query: QueryRoot
+   }
+   ```
+
+   The root types defined in the schema have to be given within `opts`:
+
+   - `:query` (required)
+   - `:mutation`
+   - `:subscription`
+
+   Each root type has to be a map associating field names with claro
+   resolvables:
+
+   ```clojure
+   (def QueryRoot
+     {:person (map->Person {})
+      :me     (map->Me {})
+      ...})
+   ```
+
+   A basic GraphQL handler thus consists of at least:
+
+   ```clojure
+   (alumbra.core/handler
+     {:schema (io/resource \"Schema.gql\")
+      :query  QueryRoot})
+   ```
+
+   Schemas can be given as strings, `File` or `URI` values. Multiple schemas can
+   be supplied and will be merged in-order.
+
+   A claro resolution environment can be supplied using `:env`. The environment
+   can be extended using a request-specific `:context` function, e.g.:
+
+   ```clojure
+   (defn context
+     [request]
+     {:locale  (read-locale request)
+      :db      (select-db-for request)
+      :session (read-session request)})
+   ```
+
+   The claro engine to-be-used for resolution can be specified using `:engine`,
+   allowing for custom engine middlewares to be attached.
+
+   Custom directive handlers can be defined in `:directives`. They'll take a
+   claro projection and the respective directive arguments, allowing a new
+   projection to be generated. For example, the `@skip` handler is defined as:
+
+   ```clojure
+   {\"skip\" (fn [projection arguments]
+               (when-not (:if arguments)
+                 projection))}
+   ```
+
+   Custom scalar handlers can be defined in `:scalars`, as `:encode`/`:decode`
+   pairs.
+
+   ```clojure
+   {\"NumericalID\" {:encode str, :decode #(Long. %)}}
+   ```
+
+   Note that, for both directives and scalars, the respective schema definitions
+   have to exist."
   [{:keys [schema] :as opts}]
   (let [schema (analyze schema)
         opts   (assoc opts :schema schema)]
