@@ -18,7 +18,7 @@ you to get started with minimal effort.
 - idiomatic Clojure __value and name coercion__ (e.g., for record fields and
   enum values),
 - a __fast parser and query validator__,
-- compatibile with __[GraphiQL][graphiql]__,
+- compatible with __[GraphiQL][graphiql]__,
 - and seamless integration with __[ring][ring]-compatible__ servers,
 
 [claro]: https://github.com/xsc/claro
