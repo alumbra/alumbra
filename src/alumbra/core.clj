@@ -138,8 +138,30 @@
 
 (defn graphiql-handler
   "Generate a Ring handler exposing the interactive [GraphiQL][graphiql]
-   environment. See `alumbra.ring.graphiql/handler` for available options.
+   environment, pointing at `graphql-path`. (Make sure to set the correct CORS
+   options if you're using an absolute URL.)
+
+   ```clojure
+   (alumbra.core/graphiql-handler
+     \"/people/v1/graphql\"
+     {:title \"People API (GraphiQL)\"})
+   ```
+
+   By default, the static GraphiQL resources will be fetched from a CDN. You
+   can set the respective `*-version` keys, or disable this completely using
+   `:use-cdn?`.
+
+   You can add custom tags to the `<head>` element using `:custom-head-tags`.
 
    [graphiql]: https://github.com/graphql/graphiql"
-  [graphql-path & [opts]]
+  [graphql-path
+   & [{:keys [graphiql-version
+              promise-version
+              fetch-version
+              react-version
+              use-cdn?
+              title
+              custom-head-tags]
+       :as opts}]]
+  {:pre [(string? graphql-path)]}
   (graphiql/handler graphql-path opts))
