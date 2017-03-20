@@ -28,8 +28,7 @@ you to get started with minimal effort.
 ## Quickstart
 
 > __Note:__ You might want to familiarize yourself with [claro][claro]'s ideas
-> and implementation since that's the foundation where a lot of alumbra's power
-> comes from.
+> and implementation since that's the source of a lot of alumbra's powers.
 
 ```clojure
 (require '[alumbra.core :as alumbra]
