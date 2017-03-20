@@ -129,10 +129,10 @@
     :as opts}]
   (let [schema (analyze schema)
         opts   (assoc opts :schema schema)]
-    (->> {:parser        #(parser/parse-document %)
-          :validator     (validator/validator schema)
-          :canonicalizer (analyzer/canonicalizer schema)
-          :executor      (claro/executor opts)}
+    (->> {:parser-fn       #(parser/parse-document %)
+          :validator-fn    (validator/validator schema)
+          :canonicalize-fn (analyzer/canonicalizer schema)
+          :executor-fn     (claro/executor opts)}
          (merge opts)
          (graphql/handler))))
 

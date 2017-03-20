@@ -106,10 +106,10 @@
 (deftest t-query-with-context
   (let [handler (make-handler
                   {:env {:session {:id 1}}
-                   :context (fn [{:keys [headers]}]
-                              (some->> (get headers "X-Person")
-                                       (hash-map :id)
-                                       (hash-map :session)))})]
+                   :context-fn (fn [{:keys [headers]}]
+                                 (some->> (get headers "X-Person")
+                                          (hash-map :id)
+                                          (hash-map :session)))})]
     (test/with-server handler
       (is (test/has-data?
             (->> {:headers {"X-Person" "2"}}
