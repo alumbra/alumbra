@@ -122,7 +122,11 @@
 
    Note that, for both directives and scalars, the respective schema definitions
    have to exist."
-  [{:keys [schema] :as opts}]
+  [{:keys [schema
+           query mutation subscription
+           engine env context
+           scalars directives]
+    :as opts}]
   (let [schema (analyze schema)
         opts   (assoc opts :schema schema)]
     (->> {:parser        #(parser/parse-document %)
