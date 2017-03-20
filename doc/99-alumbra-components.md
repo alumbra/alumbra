@@ -1,4 +1,4 @@
-# Alumbra Components
+# Components
 
 __alumbra__ is built upon a series of components that can be used and replaced
 individually.
