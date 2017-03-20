@@ -1,7 +1,8 @@
 (ns alumbra.core
   (:require [alumbra.ring
              [graphql :as graphql]
-             [graphiql :as graphiql]]
+             [graphiql :as graphiql]
+             [pipeline :as pipeline]]
             [alumbra
              [analyzer :as analyzer]
              [claro :as claro]
@@ -90,10 +91,10 @@
    be supplied and will be merged in-order.
 
    A claro resolution environment can be supplied using `:env`. The environment
-   can be extended using a request-specific `:context` function, e.g.:
+   can be extended using a request-specific `:context-fn` function, e.g.:
 
    ```clojure
-   (defn context
+   (defn context-fn
      [request]
      {:locale  (read-locale request)
       :db      (select-db-for request)
@@ -124,7 +125,7 @@
    have to exist."
   [{:keys [schema
            query mutation subscription
-           engine env context
+           engine env context-fn
            scalars directives]
     :as opts}]
   (let [schema (analyze schema)
