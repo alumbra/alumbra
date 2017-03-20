@@ -166,3 +166,40 @@
        :as opts}]]
   {:pre [(string? graphql-path)]}
   (graphiql/handler graphql-path opts))
+
+;; ## Queries
+
+(defn executor
+  "Creates a function that takes a query string, as well as an option map,
+   returning the result of running the query.
+
+   ```clojure
+   (def run-query
+     (alumbra.core/executor
+       {:schema (io/resource \"Schema.gql\")
+        :query  QueryRoot}))
+
+   (run-query \"{ person { name } }\")
+   ;; => {:data {\"person\" {\"name\" ...}}}
+   ```
+
+   Allowed options are:
+
+   - `:operation-name`: for multi-operation queries, sets the one to execute,
+   - `:variables`: a map of variable name strings to their value,
+   - `:context`: a context map to-be-merged into the resolution environment.
+
+   All [[handler]] options (except `:context-fn`) are suppored."
+  [{:keys [schema
+           query mutation subscription
+           engine env
+           scalars directives]
+    :as opts}]
+  (let [schema (analyze schema)
+        opts   (assoc opts :schema schema)]
+    (->> {:parser-fn       #(parser/parse-document %)
+          :validator-fn    (validator/validator schema)
+          :canonicalize-fn (analyzer/canonicalizer schema)
+          :executor-fn     (claro/executor opts)}
+         (merge opts)
+         (partial pipeline/run-query))))
