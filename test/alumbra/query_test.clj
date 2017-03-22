@@ -30,8 +30,9 @@
                    (merge (dissoc overrides :query))))]
     (fn [request]
       (let [response (base request)]
-        (when-let [ex (:alumbra/exception response)]
-          (.printStackTrace ^Throwable ex))
+        (when-not (:silent? overrides)
+          (when-let [ex (:alumbra/exception response)]
+            (.printStackTrace ^Throwable ex)))
         response))))
 
 ;; ## Tests
@@ -135,3 +136,28 @@
               result
               "validation-error"
               #"Error of class: :field/name-in-scope"))))))
+
+(deftest t-input-coercion-error
+  (let [handler (make-handler
+                  {:scalars
+                   {"ID" {:decode #(throw (ex-info "oops." {:value %}))}}
+                   :silent? true})]
+    (test/with-server handler
+      (let [result (test/query "{ person(id: 10) { name } }")]
+        (is (test/has-status? result 500))
+        (is (test/has-error?
+              result
+              "uncaught-exception"
+              #".*could not coerce value to 'ID': 10"))))))
+
+(deftest t-output-coercion-error
+  (let [handler (make-handler
+                  {:scalars
+                   {"ID" {:encode #(throw (ex-info "oops." {:value %}))}}})]
+    (test/with-server handler
+      (let [result (test/query "{ person(id: 10) { id } }")]
+        (is (test/has-status? result 500))
+        (is (test/has-error?
+              result
+              nil
+              #"could not coerce value to 'ID': \"10\""))))))
