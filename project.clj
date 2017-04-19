@@ -17,7 +17,7 @@
                              [clj-http "3.5.0"]]}
              :codox
              {:plugins [[lein-codox "0.10.3"]]
-              :dependencies [[codox-theme-rdash "0.1.1"]]
+              :dependencies [[codox-theme-rdash "0.1.2"]]
               :codox {:project {:name "alumbra"}
                       :metadata {:doc/format :markdown}
                       :themes [:rdash]
