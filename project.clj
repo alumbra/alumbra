@@ -6,10 +6,10 @@
             :year 2016
             :key "mit"}
   :dependencies [[org.clojure/clojure "1.9.0-alpha14" :scope "provided"]
-                 [alumbra/claro "0.1.7"]
-                 [alumbra/ring "0.1.2"]
-                 [alumbra/analyzer "0.1.9"]
-                 [alumbra/validator "0.1.1"]
+                 [alumbra/claro "0.1.8"]
+                 [alumbra/ring "0.1.3"]
+                 [alumbra/analyzer "0.1.10"]
+                 [alumbra/validator "0.2.0"]
                  [alumbra/parser "0.1.6"]]
   :profiles {:dev
              {:dependencies [[aleph "0.4.3"]
