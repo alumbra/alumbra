@@ -6,7 +6,7 @@
             :year 2016
             :key "mit"}
   :dependencies [[org.clojure/clojure "1.9.0-alpha14" :scope "provided"]
-                 [alumbra/claro "0.1.9"]
+                 [alumbra/claro "0.1.10"]
                  [alumbra/ring "0.1.3"]
                  [alumbra/analyzer "0.1.11"]
                  [alumbra/validator "0.2.1"]
