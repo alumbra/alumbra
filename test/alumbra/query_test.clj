@@ -125,7 +125,7 @@
         (is (test/has-error?
               result
               "parser-error"
-              #"Syntax Error GraphQL Request \(1:14\).*"))))))
+              #"Syntax Error \(1:14\).*"))))))
 
 (deftest t-query-validation-error
   (let [handler (make-handler)]
@@ -135,7 +135,7 @@
         (is (test/has-error?
               result
               "validation-error"
-              #"Error of class: :field/name-in-scope"))))))
+              #"Cannot query field \"unknownField\" on type \"Person\"."))))))
 
 (deftest t-input-coercion-error
   (let [handler (make-handler

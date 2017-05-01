@@ -2,7 +2,8 @@
   (:require [clojure.test :refer :all]
             [alumbra.test :as test]
             [alumbra.core :as alumbra]
-            [claro.data :as data]))
+            [claro.data :as data]
+            [clojure.walk :as walk]))
 
 ;; ## Fixtures
 
@@ -29,8 +30,10 @@
                    (update :query merge (:query overrides))
                    (merge (dissoc overrides :query))))]
     (fn [& args]
-      (-> (apply base args)
-          (assoc :success? true)))))
+      (let [result (apply base args)]
+        (-> (select-keys result [:data :errors])
+            (update :data walk/keywordize-keys)
+            (assoc :success? true))))))
 
 ;; ## Tests
 

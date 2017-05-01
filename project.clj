@@ -1,4 +1,4 @@
-(defproject alumbra "0.1.7-SNAPSHOT"
+(defproject alumbra "0.2.0-SNAPSHOT"
   :description "Simple and Elegant GraphQL for Clojure"
   :url "https://github.com/alumbra/alumbra"
   :license {:name "MIT License"
@@ -7,7 +7,7 @@
             :key "mit"}
   :dependencies [[org.clojure/clojure "1.9.0-alpha14" :scope "provided"]
                  [alumbra/claro "0.1.10"]
-                 [alumbra/ring "0.1.3"]
+                 [alumbra/pipeline "0.2.1"]
                  [alumbra/analyzer "0.1.12"]
                  [alumbra/validator "0.2.1"]
                  [alumbra/parser "0.1.6"]]
