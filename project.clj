@@ -1,4 +1,4 @@
-(defproject alumbra "0.2.2"
+(defproject alumbra "0.2.3-SNAPSHOT"
   :description "Simple and Elegant GraphQL for Clojure"
   :url "https://github.com/alumbra/alumbra"
   :license {:name "MIT License"
