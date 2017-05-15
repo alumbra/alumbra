@@ -148,7 +148,7 @@
         (is (test/has-error?
               result
               "uncaught-exception"
-              #".*could not coerce value to 'ID': 10"))))))
+              #".*Could not coerce value to 'ID': 10"))))))
 
 (deftest t-output-coercion-error
   (let [handler (make-handler
@@ -160,4 +160,4 @@
         (is (test/has-error?
               result
               nil
-              #"could not coerce value to 'ID': \"10\""))))))
+              #"Could not coerce value to 'ID': \"10\""))))))
