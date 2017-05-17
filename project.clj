@@ -8,7 +8,7 @@
   :dependencies [[org.clojure/clojure "1.9.0-alpha14" :scope "provided"]
                  [alumbra/claro "0.1.13"]
                  [alumbra/pipeline "0.2.1"]
-                 [alumbra/analyzer "0.1.15"]
+                 [alumbra/analyzer "0.1.16"]
                  [alumbra/validator "0.2.1"]
                  [alumbra/parser "0.1.7"]]
   :profiles {:dev
