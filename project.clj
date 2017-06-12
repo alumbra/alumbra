@@ -7,6 +7,7 @@
             :key "mit"}
   :dependencies [[org.clojure/clojure "1.9.0-alpha14" :scope "provided"]
                  [alumbra/claro "0.1.14"]
+                 [alumbra/errors "0.1.1"]
                  [alumbra/pipeline "0.2.1"]
                  [alumbra/analyzer "0.1.17"]
                  [alumbra/validator "0.2.1"]
